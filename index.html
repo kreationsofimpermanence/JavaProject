@@ -39,14 +39,33 @@
                     class="magnifying-glass-solid-full"></img>
                 </div>
             </div>
+            <div class="band__row">
                 <div class="the-band">
-                    <img src="./assets/band.jfif" class="the band">
+                    <img src="./assets/band.jfif" class="the-band">
                 </div>
+                <div class="show_dates">
+                    <h2 class="history">Phish Tour History:</h2>
+                    <h3 class="history-show">First Show: 1983-12-02</h3>
+                    <h3 class="history-show">New Years Shows:</h3>
+                    <h3 class="history-shows">Every year from 1989 to 1999. <br>2002 & 2003 <br>Every year from 2009-2019 <br> Every year from 2021 - present </h3>
+                    <h3 class="history-shows">**Phish took a hiatus from all shows 2004 - 2008**</h3>
+                </div>
+            </div>
         </div>
         </Section>
     </Section>
+    
     <Section id="search">
-        <div class="songs"></div>
+        <div class="search__content-wrapper">
+            <select id="filter-songs" onchange="filterShows(event)">
+                <option value="" disabled selected>Sort</option>
+                <option value="LOW_TO_High">Year - Oldest to Newest </option>
+                <option value="HIGH_TO_LOW">Year - Newest to Oldest </option>
+                <option value="A_TO_Z">Alphabetical City - A to Z </option>
+            </select>
+        </div>
+            <div class="songs">        </div>
+            <div class="other_shows">        </div>
     </Section>
     </body>
 </html>
