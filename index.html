@@ -56,16 +56,19 @@
     </Section>
     
     <Section id="search">
+        <div class="songs">        </div>
         <div class="search__content-wrapper">
             <select id="filter-songs" onchange="filterShows(event)">
                 <option value="" disabled selected>Sort</option>
-                <option value="LOW_TO_High">Year - Oldest to Newest </option>
-                <option value="HIGH_TO_LOW">Year - Newest to Oldest </option>
-                <option value="A_TO_Z">Alphabetical City - A to Z </option>
+                <option value="DATE_ASC">Date - Oldest to Newest</option>
+                <option value="DATE_DESC">Date - Newest to Oldest</option>
+                <option value="CITY_ASC">City - A to Z</option>
+                <option value="CITY_DESC">City - Z to A</option>
+                <option value="VENUE_ASC">Venue - A to Z</option>
+                <option value="VENUE_DESC">Venue - Z to A</option>
             </select>
         </div>
-            <div class="songs">        </div>
-            <div class="other_shows">        </div>
+        <div class="other_shows">        </div>
     </Section>
     </body>
 </html>
