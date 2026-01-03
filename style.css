@@ -229,9 +229,9 @@ input{
 
 .search__content-wrapper{
     display:flex;
-    justify-content: right;
+    justify-content: left;
     align-items: center;
-    padding: 0 24px;
+    padding: 48px 24px 0 24px;
 }
 
 .songs, .song {
@@ -250,6 +250,20 @@ input{
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
+.other_show{
+    width: 100%;
+    max-width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+.other_meta{
+    margin-top: 8px;
+    font-size: 14px;
+    color: #000;
+    text-align: center;
+}
 .download__btn{
     display: block;
     width: 100%;
@@ -267,6 +281,13 @@ input{
     transform: translate(-50%); 
     transition: all .35s ease;
 }
+.other_download{
+    position: static;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    margin-top: 12px;
+}
 
 .other_shows{
     padding: 12px;
@@ -279,7 +300,8 @@ input{
 }   
 
 .other_title{
-    margin-top: 100px;
+   padding: 0 0 12px 0;
+   text-align: left;
 }
 
 @media (max-width: 1200px) {
