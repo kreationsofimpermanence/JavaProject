@@ -2,6 +2,46 @@
 const search = document.querySelector('#search')
 const songWrapper = document.querySelector('.songs')
 const songWrapper2 = document.querySelector('.other_shows')
+let currentOtherShows = []
+
+function renderOtherShows(list){ //renders other shows on the same date
+  if(!Array.isArray(list) || list.length === 0){
+    songWrapper2.innerHTML = ''
+    return
+  }
+  let html = '<br><h2 class="other_title">Other Shows on this Date:</h2><br>'
+  for(let i=0;i<list.length;i++){
+    const show = list[i]
+    html += `
+      <div class="other_show">
+        <img src=${show.album_cover_url} class="album-cover" alt="${show.tour_name} Album Cover"/>
+        <div class="other_meta"><h2>${show.date} <br> ${show.venue_name} <br> ${show.venue.city}, ${show.venue.state}</h2></div>
+        ${show.album_zip_url ? `<a href="${show.album_zip_url}" class="download__btn other_download">Download Album Here</a>` : ''}
+      </div>
+    `
+  }
+  songWrapper2.innerHTML = html
+}
+
+function filterShows(event){
+  const value = event && event.target ? event.target.value : ''
+  let list = currentOtherShows.slice() //uses the list of other shows from the search to filter/sort
+  if(value === 'LOW_TO_High' || value === 'DATE_ASC'){
+    list.sort((a,b) => new Date(a.date) - new Date(b.date))
+  } else if (value === 'HIGH_TO_LOW' || value === 'DATE_DESC'){
+    list.sort((a,b) => new Date(b.date) - new Date(a.date))
+  } else if (value === 'A_TO_Z' || value === 'CITY_ASC'){
+    list.sort((a,b) => String(a.venue.city || a.tour_name || '').localeCompare(String(b.venue.city || b.tour_name || '')))
+  } else if (value === 'CITY_DESC' || value === 'Z_TO_A'){
+    list.sort((a,b) => String(b.venue.city || b.tour_name || '').localeCompare(String(a.venue.city || a.tour_name || '')))
+  }  else if (value === 'A_TO_Z' || value === 'VENUE_ASC'){
+    list.sort((a,b) => String(a.venue_name || a.tour_name || '').localeCompare(String(b.venue_name || b.tour_name || '')))
+  } else if (value === 'VENUE_DESC' || value === 'Z_TO_A'){
+    list.sort((a,b) => String(b.venue_name || b.tour_name || '').localeCompare(String(a.venue_name || a.tour_name || '')))
+  }
+  renderOtherShows(list)
+}
+window.filterShows = filterShows
 
 function searchChange(event){   //gets the item to be searched
    renderSongs(event.target.value) //sends item typed in to the renderSongs function
@@ -30,35 +70,12 @@ async function renderSongs(searchTerm){ //uses search parameters to get the song
         <img src=${song.exact_show.album_cover_url} class="album-cover" alt="${song.exact_show.tour_name} Album Cover"/>
           ${song.exact_show.album_zip_url ? `<a href="${song.exact_show.album_zip_url}" class="download__btn">Download Album Here</a>` : ''}
       `
-    if(song.other_shows.length > 0) {//loops through other shows on that date and displays albumn covers
-      songWrapper2.innerHTML += '<br><h2 class="other_title">Other Shows on this Date:</h2><br>' 
-      for(let i = 0; i < song.other_shows.length; i++){
-        songWrapper2.innerHTML +=`
-          <div class="other_shows">
-          <img src=${song.other_shows[i].album_cover_url} class="album-cover" alt="${song.other_shows[i].tour_name} Album Cover"/>
-            ${song.other_shows[i].album_zip_url ? `<a href="${song.other_shows[i].album_zip_url}" class="download__btn">Download Album Here</a>` : ''}
-          </div>
-          `
-      }
-    }
-    
-     function filterShows(filter) {
-      if (filter === 'LOW_TO_High') {
-         console.log('Filtering shows with filter:', filter);
-        // song.other_shows.sort((a, b) => a.year - b.year);
-       } else if (filter === 'HIGH_TO_LOW') {
-         console.log('Filtering shows with filter:', filter);
-         //song.other_shows.sort((a, b) => b.year - a.year);
-       } else if (filter === 'A_TO_Z') {
-         console.log('Filtering shows with filter:', filter);
-         //song.other_shows.sort((a, b) => a.city.localeCompare(b.city));
-       }
-    }
-    
-    setTimeout( () => {
-      filterShows();
-    });
-        
-     
-       
- }
+
+    if(song.other_shows.length > 0){ //if there are other shows on that date, it will render them
+      currentOtherShows = song.other_shows.slice()
+      renderOtherShows(currentOtherShows)
+    } else {
+      currentOtherShows = []
+      renderOtherShows(currentOtherShows)
+    } 
+}
